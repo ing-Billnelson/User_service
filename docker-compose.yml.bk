@@ -1,0 +1,24 @@
+version: "3.8"
+
+services:
+  sqlserver:
+    image: mcr.microsoft.com/azure-sql-edge #mssql/server:2019-CU18-ubuntu-20.04
+    container_name: sqlserver
+    environment:
+      MSSQL_DATABASE: userdb
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Rootp@ss123!"
+      MSSQL_PID: "Express"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlserver-data:/var/opt/mssql
+     # - ./sql-server-init:/docker-entrypoint-initdb.d  # Scripts SQL automatiques
+    healthcheck:
+      test: [ "CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -U sa -P $$SA_PASSWORD -Q 'SELECT 1'" ]
+      interval: 10s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  sqlserver-data:

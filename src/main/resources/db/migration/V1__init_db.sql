@@ -1,15 +1,9 @@
--- Attend un court instant pour s'assurer que le serveur est prêt à accepter des commandes.
-WAITFOR DELAY '00:00:05';
+-- PostgreSQL ne possède pas de WAITFOR natif en SQL, 
+-- on utilise pg_sleep (attention: cela bloque la session)
+SELECT pg_sleep(5);
 
--- Vérifie si la base de données 'userdb' existe déjà
-IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'userdb')
-BEGIN
-    -- Si elle n'existe pas, la créer
-    CREATE DATABASE userdb;
-    PRINT 'Database [userdb] created successfully.';
-END
-ELSE
-BEGIN
-    PRINT 'Database [userdb] already exists.';
-END
-GO
+-- Pour la création conditionnelle, on utilise souvent un utilitaire système 
+-- ou une commande directe car "CREATE DATABASE" ne peut être mis dans un bloc IF
+-- Voici la commande pour ignorer l'erreur si elle existe déjà :
+DROP DATABASE IF EXISTS userdb; -- Optionnel : pour repartir à neuf
+CREATE DATABASE userdb;

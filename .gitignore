@@ -1,0 +1,19 @@
+# Maven
+/target/
+!.mvn/wrapper/maven-wrapper.jar
+
+# IDE
+.vscode/
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# System
+.DS_Store
+
+# Logs
+*.log
+
+# Spring Boot
+spring.log

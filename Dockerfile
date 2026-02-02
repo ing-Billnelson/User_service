@@ -4,11 +4,11 @@ FROM eclipse-temurin:17-jdk-alpine
 # Créer le dossier de l'application
 WORKDIR /app
 
-# Copier les fichiers Maven et source depuis le dossier User-Service
-COPY ./User-Service/pom.xml ./ 
-COPY ./User-Service/src ./src
-COPY ./User-Service/mvnw ./
-COPY ./User-Service/.mvn ./.mvn
+# Copier les fichiers Maven et source depuis la racine
+COPY pom.xml ./ 
+COPY src ./src
+COPY mvnw ./
+COPY .mvn ./.mvn
 
 # Rendre le Maven Wrapper exécutable
 RUN chmod +x mvnw
@@ -21,3 +21,4 @@ EXPOSE 8084
 
 # Lancer le JAR
 CMD ["java", "-jar", "target/user-service-0.0.1-SNAPSHOT.jar"]
+
